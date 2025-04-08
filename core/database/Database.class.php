@@ -2,6 +2,10 @@
 
 namespace Core\Database;
 
+use PDO;
+use PDOException;
+use Exception;
+
 class Database
 {
 	private PDO $pdo;

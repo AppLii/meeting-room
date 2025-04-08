@@ -1,6 +1,9 @@
 <?php
 
-require_once __DIR__ . '/init.php';
+namespace Core\Database\Records;
+
+use Core\Database\AbstractRecord;
+
 class User extends AbstractRecord
 {
     public int $id;
