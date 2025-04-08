@@ -1,6 +1,6 @@
 <?php
 
-require_once __DIR__ . '/init.php';
+namespace Core\Database;
 
 /**
  * データベースレコードの基底抽象クラス
@@ -19,9 +19,9 @@ abstract class AbstractRecord
 	/**
 	 * レコードの主キー
 	 * 
-	 * @var int データベース内でのユニークID
+	 * @var int|null レコードのID。新規作成時はnull
 	 */
-	protected int $id;
+	protected ?int $id = null;
 
 	/**
 	 * レコードのIDを取得します

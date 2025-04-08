@@ -1,7 +1,10 @@
 <?php
 
+namespace Core\Database\Tables;
 
-require_once __DIR__ . '/init.php';
+use Core\Database\AbstractTable;
+use Core\Database\AbstractRecord;
+use Core\Database\Records\User;
 
 class UserTable extends AbstractTable
 {
