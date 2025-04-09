@@ -5,7 +5,20 @@
  * composerがない環境でも動作するように、PSR-4準拠の簡易オートローダーを実装
  */
 
+// エラー表示を有効化
+ini_set('display_errors', 1);
+ini_set('display_startup_errors', 1);
+error_reporting(E_ALL);
+
+// エラーログの設定
+ini_set('log_errors', 1);
+ini_set('error_log', __DIR__ . '/php-error.log');
+
+// オートローダーの登録
 spl_autoload_register(function ($class) {
+    // デバッグ: 読み込もうとしているクラスを記録
+    error_log("Attempting to load class: $class");
+    
     // 名前空間のプレフィックスを定義
     $prefix = 'Core\\';
 
@@ -22,12 +35,23 @@ spl_autoload_register(function ($class) {
 
     // 名前空間のセパレータを、ディレクトリセパレータに変換
     $file = __DIR__ . '/core/' . str_replace('\\', '/', $relative_class) . '.php';
+    
+    // デバッグ: ファイルパスを記録
+    error_log("Looking for file: $file");
 
     // もしファイルが存在すれば、それを読み込む
     if (file_exists($file)) {
         require $file;
+        error_log("Successfully loaded: $file");
+    } else {
+        error_log("File not found: $file");
     }
 });
 
-// Databaseの初期化
-Core\Database\Database::getInstance()->init(); 
+try {
+    // Databaseの初期化
+    Core\Database\Database::getInstance()->init();
+} catch (Exception $e) {
+    error_log("Error initializing database: " . $e->getMessage());
+    echo "Critical error: " . $e->getMessage();
+} 
