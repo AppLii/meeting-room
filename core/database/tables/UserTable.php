@@ -1,13 +1,16 @@
 <?php
 
-require_once __DIR__ . '/init.php';
+namespace Core\Database\Tables;
 
-class BlackoutDefinitionTable extends AbstractTable
+use Core\Database\AbstractTable;
+use Core\Database\AbstractRecord;
+use Core\Database\Records\User;
+
+class UserTable extends AbstractTable
 {
 	private static string $ID = 'id';
+	private static string $EMAIL = 'email';
 	private static string $NAME = 'name';
-	private static string $START_APPLY_AT = 'start_apply_at';
-	private static string $FINISH_APPLY_AT = 'finish_apply_at';
 
 	/**
 	 * インスタンスを取得します。
@@ -17,46 +20,62 @@ class BlackoutDefinitionTable extends AbstractTable
 	 */
 	public static function getInstance(): static
 	{
-		return self::getInstanceInternal('blackout_definition');
+		return self::getInstanceInternal('user');
 	}
 
+
 	/**
-	 * 停電定義を取得します。
+	 * ユーザーを取得します。
 	 *
-	 * @param int $id 定義ID
-	 * @return BlackoutDefinition 停電定義オブジェクト
+	 * @param int $id ユーザーID
+	 * @return User ユーザーオブジェクト
 	 * @throws Exception
 	 */
-	public function getBlackoutDefinition(int $id): BlackoutDefinition
+	public function getUser(int $id): User
 	{
-		$definitions = $this->getRecordsByID($id);
-		if (empty($definitions)) {
-			throw new Exception('Blackout definition not found.\n');
+		try {
+			$users = $this->getRecordsByID($id);
+			if (empty($users)) {
+				throw new Exception("User with ID {$id} not found");
+			}
+			return $users[0];
+		} catch (Exception $e) {
+			error_log(sprintf("[UserTable] Error retrieving user (ID: %d): %s", $id, $e->getMessage()));
+			throw new Exception("Failed to retrieve user: " . $e->getMessage());
 		}
-		return $definitions[0];
+	}
+
+	public function getUserByEmail(string $email): User
+	{
+		$users = $this->getRecordsByCondition(self::$EMAIL, $email);
+		if (empty($users)) {
+			throw new Exception("User with email {$email} not found");
+		}
+		return $users[0];
 	}
 
 	/**
-	 * すべての停電定義を取得します。
+	 * すべてのユーザーを取得します。
 	 *
-	 * @return BlackoutDefinition[] 停電定義の配列
-	 * @throws Exception 停電定義の取得に失敗した場合
+	 * @return User[] ユーザーの配列
+	 * @throws Exception ユーザーの取得に失敗した場合
 	 */
-	public function getAllBlackoutDefinitions(): array
+	public function getAllUsers(): array
 	{
 		return $this->getAllRecords();
 	}
 
 	/**
-	 * 停電定義を作成します。
+	 * ユーザーを作成します。
 	 *
-	 * @param BlackoutDefinition $definition 停電定義データ
+	 * @param User $user ユーザーデータ
 	 * @throws Exception
 	 */
-	public function addOrSetBlackoutDefinition(BlackoutDefinition $definition): void
+	public function addOrSetUser(User $user): void
 	{
-		$this->addOrSetRecord($definition);
+		$this->addOrSetRecord($user);
 	}
+
 
 	/**
 	 * レコードを作成します。
@@ -67,14 +86,11 @@ class BlackoutDefinitionTable extends AbstractTable
 	 */
 	protected function createRecord(array $data): AbstractRecord
 	{
-		$definition = new BlackoutDefinition(
-			$data['name'],
-			new DateTime($data['start_apply_at']),  // 文字列からDateTimeオブジェクトに変換
-			new DateTime($data['finish_apply_at'])  // 文字列からDateTimeオブジェクトに変換
-		);
-		$definition->id = $data['id'];
-		return $definition;
+		$user = new User($data['name'], $data['email']);
+		$user->id = $data['id'];
+		return $user;
 	}
+
 
 	/**
 	 * 読み取り権限を確認します。

@@ -1,14 +1,17 @@
 <?php
 
-require_once __DIR__ . '/init.php';
+namespace Core\Database\Tables;
 
-class RoomBlackoutTable extends AbstractTable
+use Core\Database\AbstractTable;
+use Core\Database\AbstractRecord;
+use Core\Database\Records\PjRoster;
+use Exception;
+
+class PjRosterTable extends AbstractTable
 {
 	private static string $ID = 'id';
-	private static string $DEFINITION_ID = 'definition_id';
-	private static string $ROOM_ID = 'room_id';
-	private static string $START_AT = 'start_at';
-	private static string $FINISH_AT = 'finish_at';
+	private static string $USER_ID = 'user_id';
+	private static string $PJ_ID = 'pj_id';
 
 	/**
 	 * インスタンスを取得します。
@@ -18,45 +21,45 @@ class RoomBlackoutTable extends AbstractTable
 	 */
 	public static function getInstance(): static
 	{
-		return self::getInstanceInternal('room_blackout');
+		return self::getInstanceInternal('pj_roster');
 	}
 
 	/**
-	 * 部屋の停電を取得します。
+	 * プロジェクトロスターを取得します。
 	 *
-	 * @param int $id 停電ID
-	 * @return RoomBlackout 部屋の停電オブジェクト
+	 * @param int $id ロスターID
+	 * @return PjRoster プロジェクトロスターオブジェクト
 	 * @throws Exception
 	 */
-	public function getRoomBlackout(int $id): RoomBlackout
+	public function getPjRoster(int $id): PjRoster
 	{
-		$blackouts = $this->getRecordsByID($id);
-		if (empty($blackouts)) {
-			throw new Exception('Room blackout not found.\n');
+		$rosters = $this->getRecordsByID($id);
+		if (empty($rosters)) {
+			throw new Exception('Project roster not found.\n');
 		}
-		return $blackouts[0];
+		return $rosters[0];
 	}
 
 	/**
-	 * すべての部屋の停電を取得します。
+	 * すべてのプロジェクトロスターを取得します。
 	 *
-	 * @return RoomBlackout[] 部屋の停電の配列
-	 * @throws Exception 部屋の停電の取得に失敗した場合
+	 * @return PjRoster[] プロジェクトロスターの配列
+	 * @throws Exception プロジェクトロスターの取得に失敗した場合
 	 */
-	public function getAllRoomBlackouts(): array
+	public function getAllPjRosters(): array
 	{
 		return $this->getAllRecords();
 	}
 
 	/**
-	 * 部屋の停電を作成します。
+	 * プロジェクトロスターを作成します。
 	 *
-	 * @param RoomBlackout $blackout 部屋の停電データ
+	 * @param PjRoster $pjRoster プロジェクトロスターデータ
 	 * @throws Exception
 	 */
-	public function addOrSetRoomBlackout(RoomBlackout $blackout): void
+	public function addOrSetPjRoster(PjRoster $pjRoster): void
 	{
-		$this->addOrSetRecord($blackout);
+		$this->addOrSetRecord($pjRoster);
 	}
 
 	/**
@@ -68,14 +71,9 @@ class RoomBlackoutTable extends AbstractTable
 	 */
 	protected function createRecord(array $data): AbstractRecord
 	{
-		$blackout = new RoomBlackout(
-			$data['definition_id'],
-			$data['room_id'],
-			new DateTime($data['start_at']),  // 文字列からDateTimeオブジェクトに変換
-			new DateTime($data['finish_at'])  // 文字列からDateTimeオブジェクトに変換
-		);
-		$blackout->id = $data['id'];
-		return $blackout;
+		$pjRoster = new PjRoster($data['user_id'], $data['pj_id']);
+		$pjRoster->id = $data['id'];
+		return $pjRoster;
 	}
 
 	/**

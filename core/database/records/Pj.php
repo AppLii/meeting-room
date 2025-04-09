@@ -1,6 +1,10 @@
 <?php
 
-require_once __DIR__ . '/init.php';
+namespace Core\Database\Records;
+
+use Core\Database\AbstractRecord;
+use Exception;
+use Throwable;
 
 class Pj extends AbstractRecord
 {

@@ -1,14 +1,19 @@
 <?php
 
-require_once __DIR__ . '/init.php';
+namespace Core\Database\Tables;
 
-class PjTable extends AbstractTable
+use Core\Database\AbstractTable;
+use Core\Database\AbstractRecord;
+use Core\Database\Records\BlackoutDefinition;
+use DateTime;
+use Exception;
+
+class BlackoutDefinitionTable extends AbstractTable
 {
 	private static string $ID = 'id';
-	private static string $REP = 'rep';
 	private static string $NAME = 'name';
-	private static string $NICKNAME = 'nickname';
-	private static string $MAX_RSV = 'max_rsv';
+	private static string $START_APPLY_AT = 'start_apply_at';
+	private static string $FINISH_APPLY_AT = 'finish_apply_at';
 
 	/**
 	 * インスタンスを取得します。
@@ -18,45 +23,45 @@ class PjTable extends AbstractTable
 	 */
 	public static function getInstance(): static
 	{
-		return self::getInstanceInternal('pj');
+		return self::getInstanceInternal('blackout_definition');
 	}
 
 	/**
-	 * プロジェクトを取得します。
+	 * 停電定義を取得します。
 	 *
-	 * @param int $id プロジェクトID
-	 * @return Pj プロジェクトオブジェクト
+	 * @param int $id 定義ID
+	 * @return BlackoutDefinition 停電定義オブジェクト
 	 * @throws Exception
 	 */
-	public function getPj(int $id): Pj
+	public function getBlackoutDefinition(int $id): BlackoutDefinition
 	{
-		$projects = $this->getRecordsByID($id);
-		if (empty($projects)) {
-			throw new Exception('Project not found.\n');
+		$definitions = $this->getRecordsByID($id);
+		if (empty($definitions)) {
+			throw new Exception('Blackout definition not found.\n');
 		}
-		return $projects[0];
+		return $definitions[0];
 	}
 
 	/**
-	 * すべてのプロジェクトを取得します。
+	 * すべての停電定義を取得します。
 	 *
-	 * @return Pj[] プロジェクトの配列
-	 * @throws Exception プロジェクトの取得に失敗した場合
+	 * @return BlackoutDefinition[] 停電定義の配列
+	 * @throws Exception 停電定義の取得に失敗した場合
 	 */
-	public function getAllPjs(): array
+	public function getAllBlackoutDefinitions(): array
 	{
 		return $this->getAllRecords();
 	}
 
 	/**
-	 * プロジェクトを作成します。
+	 * 停電定義を作成します。
 	 *
-	 * @param Pj $pj プロジェクトデータ
+	 * @param BlackoutDefinition $definition 停電定義データ
 	 * @throws Exception
 	 */
-	public function addOrSetPj(Pj $pj): void
+	public function addOrSetBlackoutDefinition(BlackoutDefinition $definition): void
 	{
-		$this->addOrSetRecord($pj);
+		$this->addOrSetRecord($definition);
 	}
 
 	/**
@@ -68,10 +73,13 @@ class PjTable extends AbstractTable
 	 */
 	protected function createRecord(array $data): AbstractRecord
 	{
-		$pj = new Pj($data['name'], $data['nickname'], $data['max_rsv']);
-		$pj->id = $data['id'];
-		$pj->rep = $data['rep'];
-		return $pj;
+		$definition = new BlackoutDefinition(
+			$data['name'],
+			new DateTime($data['start_apply_at']),  // 文字列からDateTimeオブジェクトに変換
+			new DateTime($data['finish_apply_at'])  // 文字列からDateTimeオブジェクトに変換
+		);
+		$definition->id = $data['id'];
+		return $definition;
 	}
 
 	/**

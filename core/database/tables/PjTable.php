@@ -1,17 +1,19 @@
 <?php
 
-require_once __DIR__ . '/init.php';
+namespace Core\Database\Tables;
 
-class RsvTable extends AbstractTable
+use Core\Database\AbstractTable;
+use Core\Database\AbstractRecord;
+use Core\Database\Records\Pj;
+use Exception;
+
+class PjTable extends AbstractTable
 {
 	private static string $ID = 'id';
-	private static string $PJ_ID = 'pj_id';
-	private static string $ROOM_ID = 'room_id';
-	private static string $USER_ID = 'user_id';
-	private static string $START_AT = 'start_at';
-	private static string $FINISH_AT = 'finish_at';
-	private static string $NOTE = 'note';
-	private static string $RSVED_AT = 'rsved_at';
+	private static string $REP = 'rep';
+	private static string $NAME = 'name';
+	private static string $NICKNAME = 'nickname';
+	private static string $MAX_RSV = 'max_rsv';
 
 	/**
 	 * インスタンスを取得します。
@@ -21,45 +23,45 @@ class RsvTable extends AbstractTable
 	 */
 	public static function getInstance(): static
 	{
-		return self::getInstanceInternal('rsv');
+		return self::getInstanceInternal('pj');
 	}
 
 	/**
-	 * 予約を取得します。
+	 * プロジェクトを取得します。
 	 *
-	 * @param int $id 予約ID
-	 * @return Rsv 予約オブジェクト
+	 * @param int $id プロジェクトID
+	 * @return Pj プロジェクトオブジェクト
 	 * @throws Exception
 	 */
-	public function getRsv(int $id): Rsv
+	public function getPj(int $id): Pj
 	{
-		$reservations = $this->getRecordsByID($id);
-		if (empty($reservations)) {
-			throw new Exception('Reservation not found.\n');
+		$projects = $this->getRecordsByID($id);
+		if (empty($projects)) {
+			throw new Exception('Project not found.\n');
 		}
-		return $reservations[0];
+		return $projects[0];
 	}
 
 	/**
-	 * すべての予約を取得します。
+	 * すべてのプロジェクトを取得します。
 	 *
-	 * @return Rsv[] 予約の配列
-	 * @throws Exception 予約の取得に失敗した場合
+	 * @return Pj[] プロジェクトの配列
+	 * @throws Exception プロジェクトの取得に失敗した場合
 	 */
-	public function getAllRsvs(): array
+	public function getAllPjs(): array
 	{
 		return $this->getAllRecords();
 	}
 
 	/**
-	 * 予約を作成します。
+	 * プロジェクトを作成します。
 	 *
-	 * @param Rsv $rsv 予約データ
+	 * @param Pj $pj プロジェクトデータ
 	 * @throws Exception
 	 */
-	public function addOrSetRsv(Rsv $rsv): void
+	public function addOrSetPj(Pj $pj): void
 	{
-		$this->addOrSetRecord($rsv);
+		$this->addOrSetRecord($pj);
 	}
 
 	/**
@@ -71,16 +73,10 @@ class RsvTable extends AbstractTable
 	 */
 	protected function createRecord(array $data): AbstractRecord
 	{
-		$rsv = new Rsv(
-			$data['pj_id'],
-			$data['room_id'],
-			$data['user_id'],
-			new DateTime($data['start_at']),
-			new DateTime($data['finish_at']),
-			$data['note']
-		);
-		$rsv->id = $data['id'];
-		return $rsv;
+		$pj = new Pj($data['name'], $data['nickname'], $data['max_rsv']);
+		$pj->id = $data['id'];
+		$pj->rep = $data['rep'];
+		return $pj;
 	}
 
 	/**

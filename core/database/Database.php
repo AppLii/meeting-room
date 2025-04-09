@@ -1,7 +1,20 @@
 <?php
 
+namespace Core\Database;
 
-require_once __DIR__ . '/init.php';
+use PDO;
+use PDOException;
+use Exception;
+use TypeError;
+use Throwable;
+use ValueError;
+use Core\Database\Tables\UserTable;
+use Core\Database\Tables\PjTable;
+use Core\Database\Tables\PjRosterTable;
+use Core\Database\Tables\RoomTable;
+use Core\Database\Tables\RsvTable;
+use Core\Database\Tables\BlackoutDefinitionTable;
+use Core\Database\Tables\RoomBlackoutTable;
 
 class Database
 {
@@ -71,7 +84,7 @@ class Database
 	public function init(): void
 	{
 		try {
-			$this->pdo = new PDO('sqlite:/var/db/rsv_app.sqlite');
+			$this->pdo = new PDO('sqlite:/var/db/meeting-room.sqilte');
 			$this->pdo->setAttribute(PDO::ATTR_ERRMODE, PDO::ERRMODE_EXCEPTION);
 			// SQLiteの外部キー制約を有効化
 			$this->pdo->exec('PRAGMA foreign_keys = ON');
@@ -365,7 +378,7 @@ class Database
 			$tables = $this->getTableNames();
 
 			// 必要なテーブルのリスト
-			$requiredTables = ['user', 'pj', 'pj_roster', 'room', 'rsv', 'blackout_definitions', 'room_blackouts'];
+			$requiredTables = ['user', 'pj', 'pj_roster', 'room', 'rsv', 'blackout_definition', 'room_blackout'];
 
 			foreach ($requiredTables as $table) {
 				if (!in_array($table, $tables)) {
@@ -435,12 +448,12 @@ class Database
 					FOREIGN KEY (room_id) REFERENCES room(id),
 					FOREIGN KEY (created_by) REFERENCES user(id)
 				) STRICT",
-				'blackout_definitions' => "CREATE TABLE blackout_definitions (
+				'blackout_definition' => "CREATE TABLE blackout_definition (
 					id INTEGER PRIMARY KEY AUTOINCREMENT,
 					name TEXT NOT NULL CHECK (length(name) < 128),
 					description TEXT CHECK (description IS NULL OR length(description) < 512)
 				) STRICT",
-				'room_blackouts' => "CREATE TABLE room_blackouts (
+				'room_blackout' => "CREATE TABLE room_blackout (
 					id INTEGER PRIMARY KEY AUTOINCREMENT,
 					room_id INTEGER NOT NULL,
 					blackout_id INTEGER NOT NULL,
@@ -448,7 +461,7 @@ class Database
 					end_time TEXT NOT NULL,
 					CHECK (start_time < end_time),
 					FOREIGN KEY (room_id) REFERENCES room(id),
-					FOREIGN KEY (blackout_id) REFERENCES blackout_definitions(id)
+					FOREIGN KEY (blackout_id) REFERENCES blackout_definition(id)
 				) STRICT",
 				default => throw new Exception("Unknown table: $tableName")
 			};
@@ -456,7 +469,7 @@ class Database
 			$this->pdo->exec($sql);
 			error_log("[Database] Created table: $tableName");
 		} catch (PDOException $e) {
-			$this->handlePDOException($e, "creating table $tableName");
+			throw $this->handlePDOException($e, "creating table $tableName");
 		}
 	}
 }
