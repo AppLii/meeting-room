@@ -5,6 +5,10 @@ $isCli = php_sapi_name() === 'cli';
 if (!$isCli) {
     // コマンドライン以外で実行された場合は、プレーンテキスト形式で出力
     header('Content-Type: text/plain; charset=utf-8');
+    // キャッシュを無効化
+    header('Cache-Control: no-store, no-cache, must-revalidate, max-age=0');
+    header('Cache-Control: post-check=0, pre-check=0', false);
+    header('Pragma: no-cache');
 }
 
 // プロジェクトのルートディレクトリを絶対パスとして設定
@@ -19,7 +23,8 @@ $dataDir = $rootDir . '/data';
  * @return string 色付きテキスト
  */
 function colorText($text, $color) {
-    if (!php_sapi_name() === 'cli') {
+    // コマンドライン以外では色付けしない
+    if (php_sapi_name() !== 'cli') {
         return $text;
     }
     
