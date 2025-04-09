@@ -21,20 +21,24 @@ spl_autoload_register(function ($class) {
     
     // 名前空間のプレフィックスを定義
     $prefix = 'Core\\';
+    
+    // 比較用に小文字に変換
+    $class_lower = strtolower($class);
+    $prefix_lower = strtolower($prefix);
 
     // 名前空間のプレフィックスの長さを取得
-    $prefix_len = strlen($prefix);
+    $prefix_len = strlen($prefix_lower);
 
     // もし要求されたクラス名がプレフィックスで始まらなければ処理しない
-    if (strncmp($prefix, $class, $prefix_len) !== 0) {
+    if (strncmp($prefix_lower, $class_lower, $prefix_len) !== 0) {
         return;
     }
 
     // 名前空間のプレフィックスを取り除き、相対クラス名を取得
-    $relative_class = substr($class, $prefix_len);
+    $relative_class = substr($class, strlen($prefix));
 
     // 名前空間のセパレータを、ディレクトリセパレータに変換
-    $file = __DIR__ . '/core/' . str_replace('\\', '/', $relative_class) . '.php';
+    $file = __DIR__ . '/core/' . str_replace('\\', '/', strtolower($relative_class)) . '.php';
     
     // デバッグ: ファイルパスを記録
     error_log("Looking for file: $file");
