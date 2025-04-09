@@ -7,6 +7,10 @@ if (!$isCli) {
     header('Content-Type: text/plain; charset=utf-8');
 }
 
+// プロジェクトのルートディレクトリを絶対パスとして設定
+$rootDir = '/var/www/api/meeting-room-back';
+$dataDir = $rootDir . '/data';
+
 /**
  * テキストに色を付ける（コマンドライン用）
  * 
@@ -103,7 +107,7 @@ echo colorText("=== データベース内容一覧 ===\n\n", 'cyan');
 try {
     // SQLiteデータベースに直接接続（読み取り専用モード）
     try {
-        $dbPath = dirname(__DIR__) . '/data/meeting-room.sqlite';
+        $dbPath = $dataDir . '/meeting-room.sqlite';
         // データベースファイルが存在するか確認
         if (!file_exists($dbPath)) {
             echo colorText("データベースファイルが存在しません: {$dbPath}\n", 'red');
