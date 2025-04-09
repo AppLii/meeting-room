@@ -1,6 +1,6 @@
 <?php
 
-$pdo = new PDO('sqlite:/var/db/rsv_app.sqlite');
+$pdo = new PDO('sqlite:/var/db/meeting-room.sqlite');
 $pdo->setAttribute(PDO::ATTR_ERRMODE, PDO::ERRMODE_EXCEPTION);
 
 $tables = $pdo->query("SELECT name FROM sqlite_master WHERE type='table'")->fetchAll(PDO::FETCH_COLUMN);
