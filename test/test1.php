@@ -12,7 +12,7 @@ if (!$isCli) {
 }
 
 // プロジェクトのルートディレクトリを絶対パスとして設定
-$rootDir = '/var/www/html/meeting-room-back';
+$rootDir = '/var/www/html/meeting-room';
 $dataDir = $rootDir . '/sqlite';
 
 /**
