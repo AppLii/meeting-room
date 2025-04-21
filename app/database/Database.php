@@ -64,6 +64,7 @@ class Database
 
 	/**
 	 * Databaseのシングルトンインスタンスを取得します。
+	 * 初めてインスタンスを作成する場合は同時にデータベースへの接続を行います。
 	 *
 	 * @return Database Databaseのインスタンス
 	 * @throws Exception インスタンス取得に失敗した場合
@@ -72,49 +73,44 @@ class Database
 	{
 		if (self::$instance === null) {
 			self::$instance = new Database();
-		}
+			try {
+				$this->pdo = new PDO('sqlite:/var/www/html/meeting-room/app/database/sqlite/meeting-room.sqlite');
+				$this->pdo->setAttribute(PDO::ATTR_ERRMODE, PDO::ERRMODE_EXCEPTION);
+				// SQLiteの外部キー制約を有効化g
+				$this->pdo->exec('PRAGMA foreign_keys = ON');
+				// SQLiteのジャーナルモードをWALに設定（パフォーマンス向上）
+				$this->pdo->exec('PRAGMA journal_mode = WAL');
+
+				// テーブル存在チェックと初期化
+				$this->ensureTablesExist();
+
+				// 全てのテーブルのインスタンスを設定しておく。
+				$this->getAllTables();
+
+			} catch (PDOException $e) {
+				$this->handlePDOException($e, 'database connection');
+			} catch (Exception $e) {
+				error_log(sprintf(
+					"[Database] Initialization error: [%s] %s\nStack trace:\n%s",
+					$e->getCode(),
+					$e->getMessage(),
+					$e->getTraceAsString()
+				));
+				throw new Exception("Database initialization failed: " . $e->getMessage());
+			}
+
+			// 全テーブルを静的に初期化
+			try {
+				$this->getAllTables();
+			} catch (Exception $e) {
+				error_log(sprintf(
+					"[Database] Error initializing tables: %s",
+					$e->getMessage()
+				));
+				throw new Exception("Failed to initialize database tables: " . $e->getMessage());
+			}
+
 		return self::$instance;
-	}
-
-	/**
-	 * データベースに接続します。
-	 *
-	 * @throws Exception データベース接続に失敗した場合
-	 */
-	public function init(): void
-	{
-		try {
-			$this->pdo = new PDO('sqlite:/var/www/html/meeting-room/app/database/sqlite/meeting-room.sqlite');
-			$this->pdo->setAttribute(PDO::ATTR_ERRMODE, PDO::ERRMODE_EXCEPTION);
-			// SQLiteの外部キー制約を有効化g
-			$this->pdo->exec('PRAGMA foreign_keys = ON');
-			// SQLiteのジャーナルモードをWALに設定（パフォーマンス向上）
-			$this->pdo->exec('PRAGMA journal_mode = WAL');
-
-			// テーブル存在チェックと初期化
-			$this->ensureTablesExist();
-		} catch (PDOException $e) {
-			$this->handlePDOException($e, 'database connection');
-		} catch (Exception $e) {
-			error_log(sprintf(
-				"[Database] Initialization error: [%s] %s\nStack trace:\n%s",
-				$e->getCode(),
-				$e->getMessage(),
-				$e->getTraceAsString()
-			));
-			throw new Exception("Database initialization failed: " . $e->getMessage());
-		}
-
-		// 全テーブルを静的に初期化
-		try {
-			$this->getAllTables();
-		} catch (Exception $e) {
-			error_log(sprintf(
-				"[Database] Error initializing tables: %s",
-				$e->getMessage()
-			));
-			throw new Exception("Failed to initialize database tables: " . $e->getMessage());
-		}
 	}
 
 	/**
