@@ -27,7 +27,9 @@ class Database
 	 * 外部からのインスタンス化を防ぐため、コンストラクタをプライベートにしています。
 	 * インスタンスの取得には getInstance() メソッドを使用してください。
 	 */
-	private function __construct() {}
+	private function __construct()
+	{
+	}
 
 	/**
 	 * PDOExceptionをアプリケーション固有の例外に変換します
@@ -74,21 +76,21 @@ class Database
 		if (self::$instance === null) {
 			self::$instance = new Database();
 			try {
-				$this->pdo = new PDO('sqlite:/var/www/html/meeting-room/app/database/sqlite/meeting-room.sqlite');
-				$this->pdo->setAttribute(PDO::ATTR_ERRMODE, PDO::ERRMODE_EXCEPTION);
+				self::$instance->pdo = new PDO('sqlite:/var/www/html/meeting-room/app/database/sqlite/meeting-room.sqlite');
+				self::$instance->pdo->setAttribute(PDO::ATTR_ERRMODE, PDO::ERRMODE_EXCEPTION);
 				// SQLiteの外部キー制約を有効化g
-				$this->pdo->exec('PRAGMA foreign_keys = ON');
+				self::$instance->pdo->exec('PRAGMA foreign_keys = ON');
 				// SQLiteのジャーナルモードをWALに設定（パフォーマンス向上）
-				$this->pdo->exec('PRAGMA journal_mode = WAL');
+				self::$instance->pdo->exec('PRAGMA journal_mode = WAL');
 
 				// テーブル存在チェックと初期化
-				$this->ensureTablesExist();
+				self::$instance->ensureTablesExist();
 
 				// 全てのテーブルのインスタンスを設定しておく。
-				$this->getAllTables();
+				self::$instance->getAllTables();
 
 			} catch (PDOException $e) {
-				$this->handlePDOException($e, 'database connection');
+				self::$instance->handlePDOException($e, 'database connection');
 			} catch (Exception $e) {
 				error_log(sprintf(
 					"[Database] Initialization error: [%s] %s\nStack trace:\n%s",
@@ -101,7 +103,7 @@ class Database
 
 			// 全テーブルを静的に初期化
 			try {
-				$this->getAllTables();
+				self::$instance->getAllTables();
 			} catch (Exception $e) {
 				error_log(sprintf(
 					"[Database] Error initializing tables: %s",
@@ -110,6 +112,7 @@ class Database
 				throw new Exception("Failed to initialize database tables: " . $e->getMessage());
 			}
 
+		}
 		return self::$instance;
 	}
 
@@ -142,7 +145,7 @@ class Database
 				$e->getMessage(),
 				$e->getTraceAsString()
 			));
-			throw new Exception('Failed to get table list: ' . $e->getMessage() . "\n", (int)$e->getCode());
+			throw new Exception('Failed to get table list: ' . $e->getMessage() . "\n", (int) $e->getCode());
 		}
 	}
 
