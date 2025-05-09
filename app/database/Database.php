@@ -1,6 +1,6 @@
 <?php
 
-namespace Core\Database;
+namespace App\Database;
 
 use PDO;
 use PDOException;
@@ -8,13 +8,13 @@ use Exception;
 use TypeError;
 use Throwable;
 use ValueError;
-use Core\Database\Tables\UserTable;
-use Core\Database\Tables\PjTable;
-use Core\Database\Tables\PjRosterTable;
-use Core\Database\Tables\RoomTable;
-use Core\Database\Tables\RsvTable;
-use Core\Database\Tables\BlackoutDefinitionTable;
-use Core\Database\Tables\RoomBlackoutTable;
+use App\Database\Tables\UserTable;
+use App\Database\Tables\PjTable;
+use App\Database\Tables\PjRosterTable;
+use App\Database\Tables\RoomTable;
+use App\Database\Tables\RsvTable;
+use App\Database\Tables\BlackoutDefinitionTable;
+use App\Database\Tables\RoomBlackoutTable;
 
 class Database
 {

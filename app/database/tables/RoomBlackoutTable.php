@@ -1,10 +1,10 @@
 <?php
 
-namespace Core\Database\Tables;
+namespace App\Database\Tables;
 
-use Core\Database\AbstractTable;
-use Core\Database\AbstractRecord;
-use Core\Database\Records\RoomBlackout;
+use App\Database\AbstractTable;
+use App\Database\AbstractRecord;
+use App\Database\Records\RoomBlackout;
 use DateTime;
 use Exception;
 

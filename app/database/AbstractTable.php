@@ -1,6 +1,6 @@
 <?php
 
-namespace Core\Database;
+namespace App\Database;
 
 /**
  * データベーステーブル操作の基底抽象クラス

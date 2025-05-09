@@ -1,8 +1,8 @@
 <?php
 
-namespace Core\Database\Records;
+namespace App\Database\Records;
 
-use Core\Database\AbstractRecord;
+use App\Database\AbstractRecord;
 use DateTime;
 use Exception;
 use Throwable;

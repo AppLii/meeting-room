@@ -10,7 +10,7 @@ require_once __DIR__ . '/init.php';
  * 認証状態の保持、CSRF対策、セッションセキュリティを担当します。
  * シングルトンパターンを採用しています。
  * 
- * @package RSV\Core
+ * @package RSV\App
  * @author  RSV Development Team
  * @version 1.0.0
  * 
@@ -83,8 +83,8 @@ class SessionManager
 	{
 		try {
 			// todo: ここで認証サーバとログイン処理を行う。
-			
-			
+
+
 			assert($password === $_SERVER['REMOTE_USER']);
 
 

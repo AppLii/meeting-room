@@ -1,6 +1,6 @@
 <?php
 
-namespace Core\Database;
+namespace App\Database;
 
 /**
  * データベースレコードの基底抽象クラス
@@ -9,7 +9,7 @@ namespace Core\Database;
  * 基本的なデータアクセスとオブジェクト操作の共通機能を提供します。
  * このクラスを継承して具体的なテーブルのレコードクラスを実装します。
  * 
- * @package RSV\Core
+ * @package RSV\App
  * @author  RSV Development Team
  * @version 1.0.0
  * 

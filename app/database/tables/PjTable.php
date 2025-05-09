@@ -1,10 +1,10 @@
 <?php
 
-namespace Core\Database\Tables;
+namespace App\Database\Tables;
 
-use Core\Database\AbstractTable;
-use Core\Database\AbstractRecord;
-use Core\Database\Records\Pj;
+use App\Database\AbstractTable;
+use App\Database\AbstractRecord;
+use App\Database\Records\Pj;
 use Exception;
 
 class PjTable extends AbstractTable

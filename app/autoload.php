@@ -18,10 +18,10 @@ ini_set('error_log', __DIR__ . '/php-error.log');
 spl_autoload_register(function ($class) {
     // デバッグ: 読み込もうとしているクラスを記録
     error_log("Attempting to load class: $class");
-    
+
     // 名前空間のプレフィックスを定義
-    $prefix = 'Core\\';
-    
+    $prefix = 'App\\';
+
     // 比較用に小文字に変換
     $class_lower = strtolower($class);
     $prefix_lower = strtolower($prefix);
@@ -38,8 +38,8 @@ spl_autoload_register(function ($class) {
     $relative_class = substr($class, strlen($prefix));
 
     // 名前空間のセパレータを、ディレクトリセパレータに変換
-    $file = __DIR__ . '/core/' . str_replace('\\', '/', strtolower($relative_class)) . '.php';
-    
+    $file = __DIR__ . '/app/' . str_replace('\\', '/', strtolower($relative_class)) . '.php';
+
     // デバッグ: ファイルパスを記録
     error_log("Looking for file: $file");
 
@@ -54,8 +54,8 @@ spl_autoload_register(function ($class) {
 
 try {
     // Databaseの初期化
-    Core\Database\Database::getInstance()->init();
+    App\Database\Database::getInstance()->init();
 } catch (Exception $e) {
     error_log("Error initializing database: " . $e->getMessage());
     echo "Critical error: " . $e->getMessage();
-} 
+}
