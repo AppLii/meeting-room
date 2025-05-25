@@ -1,20 +1,5 @@
 <?php
 
-namespace App\Database;
-
-use PDO;
-use PDOException;
-use Exception;
-use TypeError;
-use Throwable;
-use ValueError;
-use App\Database\Tables\UserTable;
-use App\Database\Tables\PjTable;
-use App\Database\Tables\PjRosterTable;
-use App\Database\Tables\RoomTable;
-use App\Database\Tables\RsvTable;
-use App\Database\Tables\BlackoutDefinitionTable;
-use App\Database\Tables\RoomBlackoutTable;
 
 class Database
 {

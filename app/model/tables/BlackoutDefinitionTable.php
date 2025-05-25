@@ -1,12 +1,5 @@
 <?php
 
-namespace App\Database\Tables;
-
-use App\Database\AbstractTable;
-use App\Database\AbstractRecord;
-use App\Database\Records\BlackoutDefinition;
-use DateTime;
-use Exception;
 
 class BlackoutDefinitionTable extends AbstractTable
 {

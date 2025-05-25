@@ -1,11 +1,5 @@
 <?php
 
-namespace App\Database\Tables;
-
-use App\Database\AbstractTable;
-use App\Database\AbstractRecord;
-use App\Database\Records\Room;
-use Exception;
 
 class RoomTable extends AbstractTable
 {

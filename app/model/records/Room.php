@@ -1,11 +1,5 @@
 <?php
 
-namespace App\Database\Records;
-
-use App\Database\AbstractRecord;
-use Exception;
-use Throwable;
-
 class Room extends AbstractRecord
 {
     public int $id;

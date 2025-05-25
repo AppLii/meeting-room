@@ -1,12 +1,5 @@
 <?php
 
-namespace App\Database\Tables;
-
-use App\Database\AbstractTable;
-use App\Database\AbstractRecord;
-use App\Database\Records\Pj;
-use Exception;
-
 class PjTable extends AbstractTable
 {
 	private static string $ID = 'id';

@@ -1,12 +1,5 @@
 <?php
 
-namespace App\Database\Tables;
-
-use App\Database\AbstractTable;
-use App\Database\AbstractRecord;
-use App\Database\Records\RoomBlackout;
-use DateTime;
-use Exception;
 
 class RoomBlackoutTable extends AbstractTable
 {

@@ -1,11 +1,5 @@
 <?php
 
-namespace App\Database\Records;
-
-use App\Database\AbstractRecord;
-use DateTime;
-use Exception;
-use Throwable;
 
 class RoomBlackout extends AbstractRecord
 {

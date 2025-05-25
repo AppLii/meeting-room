@@ -1,8 +1,5 @@
 <?php
 
-namespace App\Database\Records;
-
-use App\Database\AbstractRecord;
 
 class User extends AbstractRecord
 {

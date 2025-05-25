@@ -1,13 +1,5 @@
 <?php
 
-namespace App\Database\Tables;
-
-use App\Database\AbstractTable;
-use App\Database\AbstractRecord;
-use App\Database\Records\Rsv;
-use DateTime;
-use Exception;
-
 class RsvTable extends AbstractTable
 {
 	private static string $ID = 'id';
