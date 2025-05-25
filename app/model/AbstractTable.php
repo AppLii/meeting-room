@@ -9,6 +9,17 @@ require_once __DIR__ . '/_load.php';
  * CRUD（作成、読取、更新、削除）操作の共通実装を提供します。
  * シングルトンパターンを採用し、テーブルごとに一意のインスタンスを保証します。
  *
+ * 【子クラス開発者向け】
+ * このクラスを継承する際は、getInstance()メソッドを以下のように実装してください：
+ * ```php
+ * public static function getInstance(): static
+ * {
+ *     return self::getInstanceInternal();
+ * }
+ * ```
+ * これにより、子クラスはシングルトンパターンを簡単に実装できます。
+ * getInstanceInternal()メソッドは、クラスごとに一意のインスタンスを保証します。
+
  */
 abstract class AbstractTable
 {
@@ -27,19 +38,6 @@ abstract class AbstractTable
 	private static array $instances = [];
 
 	/**
-	 * 【子クラス開発者向け】
-	 * 
-	 * このクラスを継承する際は、getInstance()メソッドを以下のように実装してください：
-	 * 
-	 * ```php
-	 * public static function getInstance(): static
-	 * {
-	 *     return self::getInstanceInternal();
-	 * }
-	 * ```
-	 * 
-	 * これにより、子クラスはシングルトンパターンを簡単に実装できます。
-	 * getInstanceInternal()メソッドは、クラスごとに一意のインスタンスを保証します。
 	 */
 
 	/**
