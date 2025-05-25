@@ -1,3 +1,5 @@
+<?php
+
 require_once __DIR__ . '/BlackoutDefinitionTable.php';
 require_once __DIR__ . '/PjTable.php';
 require_once __DIR__ . '/PjRosterTable.php';
