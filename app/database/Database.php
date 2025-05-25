@@ -78,7 +78,7 @@ class Database
 			try {
 				self::$instance->pdo = new PDO('sqlite:/var/www/html/meeting-room/app/database/sqlite/meeting-room.sqlite');
 				self::$instance->pdo->setAttribute(PDO::ATTR_ERRMODE, PDO::ERRMODE_EXCEPTION);
-				// SQLiteの外部キー制約を有効化g
+				// SQLiteの外部キー制約を有効化
 				self::$instance->pdo->exec('PRAGMA foreign_keys = ON');
 				// SQLiteのジャーナルモードをWALに設定（パフォーマンス向上）
 				self::$instance->pdo->exec('PRAGMA journal_mode = WAL');
@@ -101,7 +101,7 @@ class Database
 				throw new Exception("Database initialization failed: " . $e->getMessage());
 			}
 
-			// 全テーブルを静的に初期化
+			// 全テーブルを初期化
 			try {
 				self::$instance->getAllTables();
 			} catch (Exception $e) {
@@ -158,7 +158,7 @@ class Database
 	public function getPDOInstance(): PDO
 	{
 		if (!isset($this->pdo)) {
-			throw new Exception('Database connection is not initialized. Please call init() first.');
+			throw new Exception('Database connection is not initialized. Please regenerate Database class instance.');
 		}
 		return $this->pdo;
 	}
@@ -190,7 +190,7 @@ class Database
 	{
 		if (!isset($this->pdo)) {
 			error_log("[Database] Attempted to prepare statement before initialization");
-			throw new Exception('Database connection is not initialized. Please call init() first.');
+			throw new Exception('Database connection is not initialized. Please regenerate Database class instance.');
 		}
 
 		try {
