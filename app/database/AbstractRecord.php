@@ -50,7 +50,7 @@ abstract class AbstractRecord
 	 * フォーマット変換を行ったりすることができます。
 	 *
 	 * @return array オブジェクトのプロパティを含む配列
-	 * @throws Exception 変換に失敗した場合
+	 * @throws \Exception 変換に失敗した場合
 	 * 
 	 * @note 継承先でのオーバーライド例:
 	 * ```

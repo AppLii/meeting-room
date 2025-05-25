@@ -1,0 +1,13 @@
+{
+	"name": "meeting-room/app",
+	"description": "Meeting Room Management System",
+	"type": "project",
+	"autoload": {
+		"psr-4": {
+			"App\\": "app/"
+		}
+	},
+	"require": {
+		"php": ">=7.4"
+	}
+}
