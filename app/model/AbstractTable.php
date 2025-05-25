@@ -377,7 +377,7 @@ abstract class AbstractTable
 
 	public function __wakeup(): void
 	{
-		throw new Exception('Singleton class cannot be unserialized');
+		throw new Exception('Singleton class cannot be un-serialized');
 	}
 
 	public function getTableName(): string
