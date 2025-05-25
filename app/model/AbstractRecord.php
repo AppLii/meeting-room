@@ -1,4 +1,5 @@
 <?php
+require_once __DIR__ . '/_load.php';
 
 /**
  * データベースレコードの基底抽象クラス

@@ -1,4 +1,5 @@
 <?php
+require_once __DIR__ . '/_load.php';
 
 class RsvTable extends AbstractTable
 {

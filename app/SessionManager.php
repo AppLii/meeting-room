@@ -1,7 +1,7 @@
 <?php
 
 
-require_once __DIR__ . '/init.php';
+require_once __DIR__ . '/_load.php';
 
 /**
  * セッション管理クラス
