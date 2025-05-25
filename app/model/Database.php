@@ -62,7 +62,7 @@ class Database
 		if (self::$instance === null) {
 			self::$instance = new Database();
 			try {
-				self::$instance->pdo = new PDO('sqlite:/var/www/html/meeting-room/app/database/sqlite/meeting-room.sqlite');
+				self::$instance->pdo = new PDO('sqlite:/var/www/html/meeting-room/app/model/sqlite/meeting-room.sqlite');
 				self::$instance->pdo->setAttribute(PDO::ATTR_ERRMODE, PDO::ERRMODE_EXCEPTION);
 				// SQLiteの外部キー制約を有効化
 				self::$instance->pdo->exec('PRAGMA foreign_keys = ON');
