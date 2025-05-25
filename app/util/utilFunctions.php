@@ -18,7 +18,7 @@ function echoDataAsTable(array $pdo_assoc, ?array $options = null): void
 
         // 最初の要素が連想配列であることを確認
         if (!is_array($pdo_assoc[0])) {
-            throw new Exception("Invalid data format: expecated associative array");
+            throw new Exception("Invalid data format: expected associative array");
         }
 
         // テーブル属性の設定
