@@ -1,7 +1,5 @@
 <?php
 
-namespace App\Database;
-
 /**
  * データベースレコードの基底抽象クラス
  * 
