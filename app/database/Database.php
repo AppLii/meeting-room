@@ -84,7 +84,7 @@ class Database
 	public function init(): void
 	{
 		try {
-			$this->pdo = new PDO('sqlite:/var/db/rsv_app.sqlite');
+			$this->pdo = new PDO('sqlite: /var/www/html/meeting-room/app/database/sqlite/meeting-room.sqlite');
 			$this->pdo->setAttribute(PDO::ATTR_ERRMODE, PDO::ERRMODE_EXCEPTION);
 			// SQLiteの外部キー制約を有効化
 			$this->pdo->exec('PRAGMA foreign_keys = ON');

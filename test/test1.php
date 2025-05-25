@@ -12,8 +12,8 @@ if (!$isCli) {
 }
 
 // プロジェクトのルートディレクトリを絶対パスとして設定
-$rootDir = '/var/www/api/meeting-room-back';
-$dataDir = $rootDir . '/data';
+$rootDir = '/var/www/html/meeting-room';
+$dataDir = $rootDir . '/app/database/sqlite';
 
 /**
  * テキストに色を付ける（コマンドライン用）
