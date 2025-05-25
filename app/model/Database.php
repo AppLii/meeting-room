@@ -169,7 +169,7 @@ class Database
 	 * SQLクエリを準備し、ステートメントを返します
 	 * 
 	 * @param string $sql SQL文
-	 * @return array{statement: \PDOStatement, params: array<string, mixed>}
+	 * @return array{statement:PDOStatement,params:array<string,mixed>}
 	 * @throws Exception
 	 */
 	public function prepare(string $sql): array
@@ -206,11 +206,11 @@ class Database
 	/**
 	 * パラメータをバインドします
 	 * 
-	 * @param array{statement: \PDOStatement, params: array<string, mixed>} $prepared
+	 * @param array{statement: PDOStatement, params: array<string, mixed>} $prepared
 	 * @param string $param パラメータ名
 	 * @param mixed $value バインドする値
 	 * @param int $type PDOパラメータ型
-	 * @return array{statement: \PDOStatement, params: array<string, mixed>}
+	 * @return array{statement: PDOStatement, params: array<string, mixed>}
 	 * @throws Exception
 	 */
 	public function bind(array $prepared, string $param, mixed $value, int $type = PDO::PARAM_STR): array
@@ -280,7 +280,7 @@ class Database
 	/**
 	 * クエリを実行し、結果を返します
 	 * 
-	 * @param array{statement: \PDOStatement, params: array<string, mixed>} $prepared
+	 * @param array{statement: PDOStatement, params: array<string, mixed>} $prepared
 	 * @return array<int, array<string, mixed>> 結果の配列
 	 * @throws Exception
 	 */
@@ -313,7 +313,7 @@ class Database
 	/**
 	 * 更新系クエリを実行します（INSERT/UPDATE/DELETE）
 	 * 
-	 * @param array{statement: \PDOStatement, params: array<string, mixed>} $prepared
+	 * @param array{statement: PDOStatement, params: array<string, mixed>} $prepared
 	 * @return int 影響を受けた行数
 	 * @throws Exception
 	 */
