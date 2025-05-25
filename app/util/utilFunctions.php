@@ -1,6 +1,5 @@
 <?php
 
-require_once __DIR__ . '/init.php';
 
 /**
  * 連想配列のデータをHTMLテーブルとして出力します。
