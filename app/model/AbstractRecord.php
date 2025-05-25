@@ -20,7 +20,7 @@ abstract class AbstractRecord
 	 * 
 	 * @var int|null レコードのID。新規作成時はnull
 	 */
-	protected ?int $id = null;
+	protected int $id; // ★★★もしかしたら、`?int`にしないとエラー出るかも....?
 
 	/**
 	 * レコードのIDを取得します
