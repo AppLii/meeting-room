@@ -1,19 +1,12 @@
 <?php
+require_once __DIR__ . '/_load.php';
 
-namespace Core\Database\Tables;
 
-use Core\Database\AbstractTable;
-use Core\Database\AbstractRecord;
-use Core\Database\Records\BlackoutDefinition;
-use DateTime;
-use Exception;
-
-class BlackoutDefinitionTable extends AbstractTable
+class PjRosterTable extends AbstractTable
 {
 	private static string $ID = 'id';
-	private static string $NAME = 'name';
-	private static string $START_APPLY_AT = 'start_apply_at';
-	private static string $FINISH_APPLY_AT = 'finish_apply_at';
+	private static string $USER_ID = 'user_id';
+	private static string $PJ_ID = 'pj_id';
 
 	/**
 	 * インスタンスを取得します。
@@ -23,45 +16,45 @@ class BlackoutDefinitionTable extends AbstractTable
 	 */
 	public static function getInstance(): static
 	{
-		return self::getInstanceInternal('blackout_definition');
+		return self::getInstanceInternal('pj_roster');
 	}
 
 	/**
-	 * 停電定義を取得します。
+	 * プロジェクトロスターを取得します。
 	 *
-	 * @param int $id 定義ID
-	 * @return BlackoutDefinition 停電定義オブジェクト
+	 * @param int $id ロスターID
+	 * @return PjRoster プロジェクトロスターオブジェクト
 	 * @throws Exception
 	 */
-	public function getBlackoutDefinition(int $id): BlackoutDefinition
+	public function getPjRoster(int $id): PjRoster
 	{
-		$definitions = $this->getRecordsByID($id);
-		if (empty($definitions)) {
-			throw new Exception('Blackout definition not found.\n');
+		$rosters = $this->getRecordsByID($id);
+		if (empty($rosters)) {
+			throw new Exception('Project roster not found.\n');
 		}
-		return $definitions[0];
+		return $rosters[0];
 	}
 
 	/**
-	 * すべての停電定義を取得します。
+	 * すべてのプロジェクトロスターを取得します。
 	 *
-	 * @return BlackoutDefinition[] 停電定義の配列
-	 * @throws Exception 停電定義の取得に失敗した場合
+	 * @return PjRoster[] プロジェクトロスターの配列
+	 * @throws Exception プロジェクトロスターの取得に失敗した場合
 	 */
-	public function getAllBlackoutDefinitions(): array
+	public function getAllPjRosters(): array
 	{
 		return $this->getAllRecords();
 	}
 
 	/**
-	 * 停電定義を作成します。
+	 * プロジェクトロスターを作成します。
 	 *
-	 * @param BlackoutDefinition $definition 停電定義データ
+	 * @param PjRoster $pjRoster プロジェクトロスターデータ
 	 * @throws Exception
 	 */
-	public function addOrSetBlackoutDefinition(BlackoutDefinition $definition): void
+	public function addOrSetPjRoster(PjRoster $pjRoster): void
 	{
-		$this->addOrSetRecord($definition);
+		$this->addOrSetRecord($pjRoster);
 	}
 
 	/**
@@ -73,13 +66,9 @@ class BlackoutDefinitionTable extends AbstractTable
 	 */
 	protected function createRecord(array $data): AbstractRecord
 	{
-		$definition = new BlackoutDefinition(
-			$data['name'],
-			new DateTime($data['start_apply_at']),  // 文字列からDateTimeオブジェクトに変換
-			new DateTime($data['finish_apply_at'])  // 文字列からDateTimeオブジェクトに変換
-		);
-		$definition->id = $data['id'];
-		return $definition;
+		$pjRoster = new PjRoster($data['user_id'], $data['pj_id']);
+		$pjRoster->id = $data['id'];
+		return $pjRoster;
 	}
 
 	/**

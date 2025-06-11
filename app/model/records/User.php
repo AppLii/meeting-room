@@ -1,8 +1,6 @@
 <?php
+require_once __DIR__ . '/_load.php';
 
-namespace Core\Database\Records;
-
-use Core\Database\AbstractRecord;
 
 class User extends AbstractRecord
 {

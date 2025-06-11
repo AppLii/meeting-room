@@ -1,11 +1,6 @@
 <?php
+require_once __DIR__ . '/_load.php';
 
-namespace Core\Database\Tables;
-
-use Core\Database\AbstractTable;
-use Core\Database\AbstractRecord;
-use Core\Database\Records\Room;
-use Exception;
 
 class RoomTable extends AbstractTable
 {

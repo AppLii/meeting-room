@@ -1,20 +1,6 @@
 <?php
+require_once __DIR__ . '/_load.php';
 
-namespace Core\Database;
-
-use PDO;
-use PDOException;
-use Exception;
-use TypeError;
-use Throwable;
-use ValueError;
-use Core\Database\Tables\UserTable;
-use Core\Database\Tables\PjTable;
-use Core\Database\Tables\PjRosterTable;
-use Core\Database\Tables\RoomTable;
-use Core\Database\Tables\RsvTable;
-use Core\Database\Tables\BlackoutDefinitionTable;
-use Core\Database\Tables\RoomBlackoutTable;
 
 class Database
 {
@@ -27,7 +13,9 @@ class Database
 	 * 外部からのインスタンス化を防ぐため、コンストラクタをプライベートにしています。
 	 * インスタンスの取得には getInstance() メソッドを使用してください。
 	 */
-	private function __construct() {}
+	private function __construct()
+	{
+	}
 
 	/**
 	 * PDOExceptionをアプリケーション固有の例外に変換します
@@ -64,6 +52,7 @@ class Database
 
 	/**
 	 * Databaseのシングルトンインスタンスを取得します。
+	 * 初めてインスタンスを作成する場合は同時にデータベースへの接続を行います。
 	 *
 	 * @return Database Databaseのインスタンス
 	 * @throws Exception インスタンス取得に失敗した場合
@@ -72,49 +61,45 @@ class Database
 	{
 		if (self::$instance === null) {
 			self::$instance = new Database();
+			try {
+				self::$instance->pdo = new PDO('sqlite:/var/www/html/meeting-room/app/model/sqlite/meeting-room.sqlite');
+				self::$instance->pdo->setAttribute(PDO::ATTR_ERRMODE, PDO::ERRMODE_EXCEPTION);
+				// SQLiteの外部キー制約を有効化
+				self::$instance->pdo->exec('PRAGMA foreign_keys = ON');
+				// SQLiteのジャーナルモードをWALに設定（パフォーマンス向上）
+				self::$instance->pdo->exec('PRAGMA journal_mode = WAL');
+
+				// テーブル存在チェックと初期化
+				self::$instance->ensureTablesExist();
+
+				// 全てのテーブルのインスタンスを設定しておく。
+				self::$instance->getAllTables();
+
+			} catch (PDOException $e) {
+				self::$instance->handlePDOException($e, 'database connection');
+			} catch (Exception $e) {
+				error_log(sprintf(
+					"[Database] Initialization error: [%s] %s\nStack trace:\n%s",
+					$e->getCode(),
+					$e->getMessage(),
+					$e->getTraceAsString()
+				));
+				throw new Exception("Database initialization failed: " . $e->getMessage());
+			}
+
+			// 全テーブルを初期化
+			try {
+				self::$instance->getAllTables();
+			} catch (Exception $e) {
+				error_log(sprintf(
+					"[Database] Error initializing tables: %s",
+					$e->getMessage()
+				));
+				throw new Exception("Failed to initialize database tables: " . $e->getMessage());
+			}
+
 		}
 		return self::$instance;
-	}
-
-	/**
-	 * データベースに接続します。
-	 *
-	 * @throws Exception データベース接続に失敗した場合
-	 */
-	public function init(): void
-	{
-		try {
-			$this->pdo = new PDO('sqlite: /var/www/html/meeting-room/app/database/sqlite/meeting-room.sqlite');
-			$this->pdo->setAttribute(PDO::ATTR_ERRMODE, PDO::ERRMODE_EXCEPTION);
-			// SQLiteの外部キー制約を有効化
-			$this->pdo->exec('PRAGMA foreign_keys = ON');
-			// SQLiteのジャーナルモードをWALに設定（パフォーマンス向上）
-			$this->pdo->exec('PRAGMA journal_mode = WAL');
-
-			// テーブル存在チェックと初期化
-			$this->ensureTablesExist();
-		} catch (PDOException $e) {
-			$this->handlePDOException($e, 'database connection');
-		} catch (Exception $e) {
-			error_log(sprintf(
-				"[Database] Initialization error: [%s] %s\nStack trace:\n%s",
-				$e->getCode(),
-				$e->getMessage(),
-				$e->getTraceAsString()
-			));
-			throw new Exception("Database initialization failed: " . $e->getMessage());
-		}
-
-		// 全テーブルを静的に初期化
-		try {
-			$this->getAllTables();
-		} catch (Exception $e) {
-			error_log(sprintf(
-				"[Database] Error initializing tables: %s",
-				$e->getMessage()
-			));
-			throw new Exception("Failed to initialize database tables: " . $e->getMessage());
-		}
 	}
 
 	/**
@@ -146,7 +131,7 @@ class Database
 				$e->getMessage(),
 				$e->getTraceAsString()
 			));
-			throw new Exception('Failed to get table list: ' . $e->getMessage() . "\n", (int)$e->getCode());
+			throw new Exception('Failed to get table list: ' . $e->getMessage() . "\n", (int) $e->getCode());
 		}
 	}
 
@@ -159,7 +144,7 @@ class Database
 	public function getPDOInstance(): PDO
 	{
 		if (!isset($this->pdo)) {
-			throw new Exception('Database connection is not initialized. Please call init() first.');
+			throw new Exception('Database connection is not initialized. Please regenerate Database class instance.');
 		}
 		return $this->pdo;
 	}
@@ -184,14 +169,14 @@ class Database
 	 * SQLクエリを準備し、ステートメントを返します
 	 * 
 	 * @param string $sql SQL文
-	 * @return array{statement: PDOStatement, params: array<string, mixed>}
+	 * @return array{statement:PDOStatement,params:array<string,mixed>}
 	 * @throws Exception
 	 */
 	public function prepare(string $sql): array
 	{
 		if (!isset($this->pdo)) {
 			error_log("[Database] Attempted to prepare statement before initialization");
-			throw new Exception('Database connection is not initialized. Please call init() first.');
+			throw new Exception('Database connection is not initialized. Please regenerate Database class instance.');
 		}
 
 		try {

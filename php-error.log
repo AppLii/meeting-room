@@ -1,0 +1,90 @@
+[09-Apr-2025 08:44:44 UTC] Attempting to load class: App\Database\Database
+[09-Apr-2025 08:44:44 UTC] Looking for file: /var/www/api/meeting-room-back/App/Database/Database.php
+[09-Apr-2025 08:44:44 UTC] File not found: /var/www/api/meeting-room-back/App/Database/Database.php
+[09-Apr-2025 08:44:44 UTC] PHP Fatal error:  Uncaught Error: Class "App\Database\Database" not found in /var/www/api/meeting-room-back/autoload.php:53
+Stack trace:
+#0 /var/www/api/meeting-room-back/test/test1.php(2): require_once()
+#1 {main}
+  thrown in /var/www/api/meeting-room-back/autoload.php on line 53
+[09-Apr-2025 08:46:04 UTC] Attempting to load class: App\Database\Database
+[09-Apr-2025 08:46:04 UTC] Looking for file: /var/www/api/meeting-room-back/App/Database/Database.php
+[09-Apr-2025 08:46:04 UTC] File not found: /var/www/api/meeting-room-back/App/Database/Database.php
+[09-Apr-2025 08:46:04 UTC] PHP Fatal error:  Uncaught Error: Class "App\Database\Database" not found in /var/www/api/meeting-room-back/autoload.php:53
+Stack trace:
+#0 /var/www/api/meeting-room-back/test/test1.php(2): require_once()
+#1 {main}
+  thrown in /var/www/api/meeting-room-back/autoload.php on line 53
+[09-Apr-2025 08:47:02 UTC] Attempting to load class: App\database\Database
+[09-Apr-2025 08:47:02 UTC] Looking for file: /var/www/api/meeting-room-back/App/database/database.php
+[09-Apr-2025 08:47:02 UTC] File not found: /var/www/api/meeting-room-back/App/database/database.php
+[09-Apr-2025 08:47:02 UTC] PHP Fatal error:  Uncaught Error: Class "App\database\Database" not found in /var/www/api/meeting-room-back/autoload.php:53
+Stack trace:
+#0 /var/www/api/meeting-room-back/test/test1.php(2): require_once()
+#1 {main}
+  thrown in /var/www/api/meeting-room-back/autoload.php on line 53
+[09-Apr-2025 08:47:46 UTC] Attempting to load class: App\database\Database
+[09-Apr-2025 08:47:46 UTC] Looking for file: /var/www/api/meeting-room-back/App/database/database.php
+[09-Apr-2025 08:47:46 UTC] File not found: /var/www/api/meeting-room-back/App/database/database.php
+[09-Apr-2025 08:47:46 UTC] PHP Fatal error:  Uncaught Error: Class "App\database\Database" not found in /var/www/api/meeting-room-back/test/test1.php:109
+Stack trace:
+#0 {main}
+  thrown in /var/www/api/meeting-room-back/test/test1.php on line 109
+[09-Apr-2025 08:48:57 UTC] Attempting to load class: App\Database\Database
+[09-Apr-2025 08:48:57 UTC] Looking for file: /var/www/api/meeting-room-back/App/database/database.php
+[09-Apr-2025 08:48:57 UTC] File not found: /var/www/api/meeting-room-back/App/database/database.php
+[09-Apr-2025 08:48:57 UTC] PHP Fatal error:  Uncaught Error: Class "App\Database\Database" not found in /var/www/api/meeting-room-back/autoload.php:57
+Stack trace:
+#0 /var/www/api/meeting-room-back/test/test1.php(2): require_once()
+#1 {main}
+  thrown in /var/www/api/meeting-room-back/autoload.php on line 57
+[25-May-2025 05:39:12 UTC] Attempting to load class: App\Database\Database
+[25-May-2025 05:39:12 UTC] Looking for file: /var/www/html/meeting-room/app/Database/Database.php
+[25-May-2025 05:39:12 UTC] File not found: /var/www/html/meeting-room/app/Database/Database.php
+[25-May-2025 05:39:12 UTC] PHP Fatal error:  Uncaught Error: Class "App\Database\Database" not found in /var/www/html/meeting-room/test/test1.php:6
+Stack trace:
+#0 {main}
+  thrown in /var/www/html/meeting-room/test/test1.php on line 6
+[25-May-2025 05:41:29 UTC] Attempting to load class: App\Database\Database
+[25-May-2025 05:41:29 UTC] Looking for file: /var/www/html/meeting-room/app/Database/Database.php
+[25-May-2025 05:41:29 UTC] File not found: /var/www/html/meeting-room/app/Database/Database.php
+[25-May-2025 05:41:29 UTC] PHP Fatal error:  Uncaught Error: Class "App\Database\Database" not found in /var/www/html/meeting-room/test/test1.php:6
+Stack trace:
+#0 {main}
+  thrown in /var/www/html/meeting-room/test/test1.php on line 6
+[25-May-2025 05:42:14 UTC] Attempting to load class: App\Database\Database
+[25-May-2025 05:42:14 UTC] Looking for file: /var/www/html/meeting-room/app/database/Database.php
+[25-May-2025 05:42:14 UTC] Successfully loaded: /var/www/html/meeting-room/app/database/Database.php
+[25-May-2025 05:42:14 UTC] [Database] PDO Exception: [8] Database error occurred during operation 'database connection'
+Error Info: ["HY000",8,"attempt to write a readonly database"]
+Stack trace:
+#0 /var/www/html/meeting-room/app/database/Database.php(84): PDO->exec()
+#1 /var/www/html/meeting-room/test/test1.php(6): App\Database\Database::getInstance()
+#2 {main}
+[25-May-2025 05:42:14 UTC] Attempting to load class: App\Database\Tables\UserTable
+[25-May-2025 05:42:14 UTC] Looking for file: /var/www/html/meeting-room/app/database/tables/UserTable.php
+[25-May-2025 05:42:14 UTC] Attempting to load class: App\Database\AbstractTable
+[25-May-2025 05:42:14 UTC] Looking for file: /var/www/html/meeting-room/app/database/AbstractTable.php
+[25-May-2025 05:42:14 UTC] Successfully loaded: /var/www/html/meeting-room/app/database/AbstractTable.php
+[25-May-2025 05:42:14 UTC] Successfully loaded: /var/www/html/meeting-room/app/database/tables/UserTable.php
+[25-May-2025 05:42:14 UTC] Attempting to load class: App\Database\Tables\PjTable
+[25-May-2025 05:42:14 UTC] Looking for file: /var/www/html/meeting-room/app/database/tables/PjTable.php
+[25-May-2025 05:42:14 UTC] Successfully loaded: /var/www/html/meeting-room/app/database/tables/PjTable.php
+[25-May-2025 05:42:14 UTC] Attempting to load class: App\Database\Tables\PjRosterTable
+[25-May-2025 05:42:14 UTC] Looking for file: /var/www/html/meeting-room/app/database/tables/PjRosterTable.php
+[25-May-2025 05:42:14 UTC] Successfully loaded: /var/www/html/meeting-room/app/database/tables/PjRosterTable.php
+[25-May-2025 05:42:14 UTC] Attempting to load class: App\Database\Tables\RoomTable
+[25-May-2025 05:42:14 UTC] Looking for file: /var/www/html/meeting-room/app/database/tables/RoomTable.php
+[25-May-2025 05:42:14 UTC] Successfully loaded: /var/www/html/meeting-room/app/database/tables/RoomTable.php
+[25-May-2025 05:42:14 UTC] Attempting to load class: App\Database\Tables\RsvTable
+[25-May-2025 05:42:14 UTC] Looking for file: /var/www/html/meeting-room/app/database/tables/RsvTable.php
+[25-May-2025 05:42:14 UTC] Successfully loaded: /var/www/html/meeting-room/app/database/tables/RsvTable.php
+[25-May-2025 05:42:14 UTC] Attempting to load class: App\Database\Tables\BlackoutDefinitionTable
+[25-May-2025 05:42:14 UTC] Looking for file: /var/www/html/meeting-room/app/database/tables/BlackoutDefinitionTable.php
+[25-May-2025 05:42:14 UTC] Successfully loaded: /var/www/html/meeting-room/app/database/tables/BlackoutDefinitionTable.php
+[25-May-2025 05:42:14 UTC] Attempting to load class: App\Database\Tables\RoomBlackoutTable
+[25-May-2025 05:42:14 UTC] Looking for file: /var/www/html/meeting-room/app/database/tables/RoomBlackoutTable.php
+[25-May-2025 05:42:14 UTC] Successfully loaded: /var/www/html/meeting-room/app/database/tables/RoomBlackoutTable.php
+[25-May-2025 05:42:14 UTC] PHP Fatal error:  Uncaught Error: Call to undefined function echoDataAsTable() in /var/www/html/meeting-room/test/test1.php:11
+Stack trace:
+#0 {main}
+  thrown in /var/www/html/meeting-room/test/test1.php on line 11

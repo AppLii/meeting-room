@@ -1,11 +1,6 @@
 <?php
+require_once __DIR__ . '/_load.php';
 
-namespace Core\Database\Records;
-
-use Core\Database\AbstractRecord;
-use DateTime;
-use Exception;
-use Throwable;
 
 class RoomBlackout extends AbstractRecord
 {

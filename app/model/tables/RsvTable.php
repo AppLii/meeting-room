@@ -1,16 +1,16 @@
 <?php
+require_once __DIR__ . '/_load.php';
 
-namespace Core\Database\Tables;
-
-use Core\Database\AbstractTable;
-use Core\Database\AbstractRecord;
-use Core\Database\Records\User;
-
-class UserTable extends AbstractTable
+class RsvTable extends AbstractTable
 {
 	private static string $ID = 'id';
-	private static string $EMAIL = 'email';
-	private static string $NAME = 'name';
+	private static string $PJ_ID = 'pj_id';
+	private static string $ROOM_ID = 'room_id';
+	private static string $USER_ID = 'user_id';
+	private static string $START_AT = 'start_at';
+	private static string $FINISH_AT = 'finish_at';
+	private static string $NOTE = 'note';
+	private static string $RSVED_AT = 'rsved_at';
 
 	/**
 	 * インスタンスを取得します。
@@ -20,62 +20,46 @@ class UserTable extends AbstractTable
 	 */
 	public static function getInstance(): static
 	{
-		return self::getInstanceInternal('user');
+		return self::getInstanceInternal('rsv');
 	}
 
-
 	/**
-	 * ユーザーを取得します。
+	 * 予約を取得します。
 	 *
-	 * @param int $id ユーザーID
-	 * @return User ユーザーオブジェクト
+	 * @param int $id 予約ID
+	 * @return Rsv 予約オブジェクト
 	 * @throws Exception
 	 */
-	public function getUser(int $id): User
+	public function getRsv(int $id): Rsv
 	{
-		try {
-			$users = $this->getRecordsByID($id);
-			if (empty($users)) {
-				throw new Exception("User with ID {$id} not found");
-			}
-			return $users[0];
-		} catch (Exception $e) {
-			error_log(sprintf("[UserTable] Error retrieving user (ID: %d): %s", $id, $e->getMessage()));
-			throw new Exception("Failed to retrieve user: " . $e->getMessage());
+		$reservations = $this->getRecordsByID($id);
+		if (empty($reservations)) {
+			throw new Exception('Reservation not found.\n');
 		}
-	}
-
-	public function getUserByEmail(string $email): User
-	{
-		$users = $this->getRecordsByCondition(self::$EMAIL, $email);
-		if (empty($users)) {
-			throw new Exception("User with email {$email} not found");
-		}
-		return $users[0];
+		return $reservations[0];
 	}
 
 	/**
-	 * すべてのユーザーを取得します。
+	 * すべての予約を取得します。
 	 *
-	 * @return User[] ユーザーの配列
-	 * @throws Exception ユーザーの取得に失敗した場合
+	 * @return Rsv[] 予約の配列
+	 * @throws Exception 予約の取得に失敗した場合
 	 */
-	public function getAllUsers(): array
+	public function getAllRsvs(): array
 	{
 		return $this->getAllRecords();
 	}
 
 	/**
-	 * ユーザーを作成します。
+	 * 予約を作成します。
 	 *
-	 * @param User $user ユーザーデータ
+	 * @param Rsv $rsv 予約データ
 	 * @throws Exception
 	 */
-	public function addOrSetUser(User $user): void
+	public function addOrSetRsv(Rsv $rsv): void
 	{
-		$this->addOrSetRecord($user);
+		$this->addOrSetRecord($rsv);
 	}
-
 
 	/**
 	 * レコードを作成します。
@@ -86,11 +70,17 @@ class UserTable extends AbstractTable
 	 */
 	protected function createRecord(array $data): AbstractRecord
 	{
-		$user = new User($data['name'], $data['email']);
-		$user->id = $data['id'];
-		return $user;
+		$rsv = new Rsv(
+			$data['pj_id'],
+			$data['room_id'],
+			$data['user_id'],
+			new DateTime($data['start_at']),
+			new DateTime($data['finish_at']),
+			$data['note']
+		);
+		$rsv->id = $data['id'];
+		return $rsv;
 	}
-
 
 	/**
 	 * 読み取り権限を確認します。

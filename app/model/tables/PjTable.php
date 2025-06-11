@@ -1,11 +1,5 @@
 <?php
-
-namespace Core\Database\Tables;
-
-use Core\Database\AbstractTable;
-use Core\Database\AbstractRecord;
-use Core\Database\Records\Pj;
-use Exception;
+require_once __DIR__ . '/_load.php';
 
 class PjTable extends AbstractTable
 {

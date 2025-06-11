@@ -1,20 +1,11 @@
 <?php
+require_once __DIR__ . '/_load.php';
 
-namespace Core\Database\Tables;
-
-use Core\Database\AbstractTable;
-use Core\Database\AbstractRecord;
-use Core\Database\Records\RoomBlackout;
-use DateTime;
-use Exception;
-
-class RoomBlackoutTable extends AbstractTable
+class UserTable extends AbstractTable
 {
 	private static string $ID = 'id';
-	private static string $DEFINITION_ID = 'definition_id';
-	private static string $ROOM_ID = 'room_id';
-	private static string $START_AT = 'start_at';
-	private static string $FINISH_AT = 'finish_at';
+	private static string $EMAIL = 'email';
+	private static string $NAME = 'name';
 
 	/**
 	 * インスタンスを取得します。
@@ -24,46 +15,64 @@ class RoomBlackoutTable extends AbstractTable
 	 */
 	public static function getInstance(): static
 	{
-		return self::getInstanceInternal('room_blackout');
+		return self::getInstanceInternal('user');
 	}
 
+	// UserTableクラスはシングルトンなので、インスタンスを外部から生成できないようにします。
+	private function __construct() {}	
+
 	/**
-	 * 部屋の停電を取得します。
+	 * ユーザーを取得します。
 	 *
-	 * @param int $id 停電ID
-	 * @return RoomBlackout 部屋の停電オブジェクト
+	 * @param int $id ユーザーID
+	 * @return User ユーザーオブジェクト
 	 * @throws Exception
 	 */
-	public function getRoomBlackout(int $id): RoomBlackout
+	public function getUser(int $id): User
 	{
-		$blackouts = $this->getRecordsByID($id);
-		if (empty($blackouts)) {
-			throw new Exception('Room blackout not found.\n');
+		try {
+			$users = $this->getRecordsByID($id);
+			if (empty($users)) {
+				throw new Exception("User with ID {$id} not found");
+			}
+			return $users[0];
+		} catch (Exception $e) {
+			error_log(sprintf("[UserTable] Error retrieving user (ID: %d): %s", $id, $e->getMessage()));
+			throw new Exception("Failed to retrieve user: " . $e->getMessage());
 		}
-		return $blackouts[0];
+	}
+
+	public function getUserByEmail(string $email): User
+	{
+		$users = $this->getRecordsByCondition(self::$EMAIL, $email);
+		if (empty($users)) {
+			throw new Exception("User with email {$email} not found");
+		}
+		return $users[0];
 	}
 
 	/**
-	 * すべての部屋の停電を取得します。
+	 * すべてのユーザーを取得します。
 	 *
-	 * @return RoomBlackout[] 部屋の停電の配列
-	 * @throws Exception 部屋の停電の取得に失敗した場合
+	 * @return User[] ユーザーの配列
+	 * @throws Exception ユーザーの取得に失敗した場合
 	 */
-	public function getAllRoomBlackouts(): array
+	public function getAllUsers(): array
 	{
 		return $this->getAllRecords();
 	}
 
 	/**
-	 * 部屋の停電を作成します。
+	 * ユーザーを作成します。
 	 *
-	 * @param RoomBlackout $blackout 部屋の停電データ
+	 * @param User $user ユーザーデータ
 	 * @throws Exception
 	 */
-	public function addOrSetRoomBlackout(RoomBlackout $blackout): void
+	public function addOrSetUser(User $user): void
 	{
-		$this->addOrSetRecord($blackout);
+		$this->addOrSetRecord($user);
 	}
+
 
 	/**
 	 * レコードを作成します。
@@ -74,15 +83,11 @@ class RoomBlackoutTable extends AbstractTable
 	 */
 	protected function createRecord(array $data): AbstractRecord
 	{
-		$blackout = new RoomBlackout(
-			$data['definition_id'],
-			$data['room_id'],
-			new DateTime($data['start_at']),  // 文字列からDateTimeオブジェクトに変換
-			new DateTime($data['finish_at'])  // 文字列からDateTimeオブジェクトに変換
-		);
-		$blackout->id = $data['id'];
-		return $blackout;
+		$user = new User($data['name'], $data['email']);
+		$user->id = $data['id'];
+		return $user;
 	}
+
 
 	/**
 	 * 読み取り権限を確認します。

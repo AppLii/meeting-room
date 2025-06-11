@@ -1,6 +1,5 @@
 <?php
-
-namespace Core\Database;
+require_once __DIR__ . '/_load.php';
 
 /**
  * データベースレコードの基底抽象クラス
@@ -9,7 +8,7 @@ namespace Core\Database;
  * 基本的なデータアクセスとオブジェクト操作の共通機能を提供します。
  * このクラスを継承して具体的なテーブルのレコードクラスを実装します。
  * 
- * @package RSV\Core
+ * @package RSV\App
  * @author  RSV Development Team
  * @version 1.0.0
  * 
@@ -21,7 +20,7 @@ abstract class AbstractRecord
 	 * 
 	 * @var int|null レコードのID。新規作成時はnull
 	 */
-	protected ?int $id = null;
+	protected int $id; // ★★★もしかしたら、`?int`にしないとエラー出るかも....?
 
 	/**
 	 * レコードのIDを取得します
@@ -50,7 +49,7 @@ abstract class AbstractRecord
 	 * フォーマット変換を行ったりすることができます。
 	 *
 	 * @return array オブジェクトのプロパティを含む配列
-	 * @throws Exception 変換に失敗した場合
+	 * @throws \Exception 変換に失敗した場合
 	 * 
 	 * @note 継承先でのオーバーライド例:
 	 * ```

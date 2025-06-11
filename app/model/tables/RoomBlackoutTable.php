@@ -1,23 +1,14 @@
 <?php
+require_once __DIR__ . '/_load.php';
 
-namespace Core\Database\Tables;
 
-use Core\Database\AbstractTable;
-use Core\Database\AbstractRecord;
-use Core\Database\Records\Rsv;
-use DateTime;
-use Exception;
-
-class RsvTable extends AbstractTable
+class RoomBlackoutTable extends AbstractTable
 {
 	private static string $ID = 'id';
-	private static string $PJ_ID = 'pj_id';
+	private static string $DEFINITION_ID = 'definition_id';
 	private static string $ROOM_ID = 'room_id';
-	private static string $USER_ID = 'user_id';
 	private static string $START_AT = 'start_at';
 	private static string $FINISH_AT = 'finish_at';
-	private static string $NOTE = 'note';
-	private static string $RSVED_AT = 'rsved_at';
 
 	/**
 	 * インスタンスを取得します。
@@ -27,45 +18,45 @@ class RsvTable extends AbstractTable
 	 */
 	public static function getInstance(): static
 	{
-		return self::getInstanceInternal('rsv');
+		return self::getInstanceInternal('room_blackout');
 	}
 
 	/**
-	 * 予約を取得します。
+	 * 部屋の停電を取得します。
 	 *
-	 * @param int $id 予約ID
-	 * @return Rsv 予約オブジェクト
+	 * @param int $id 停電ID
+	 * @return RoomBlackout 部屋の停電オブジェクト
 	 * @throws Exception
 	 */
-	public function getRsv(int $id): Rsv
+	public function getRoomBlackout(int $id): RoomBlackout
 	{
-		$reservations = $this->getRecordsByID($id);
-		if (empty($reservations)) {
-			throw new Exception('Reservation not found.\n');
+		$blackouts = $this->getRecordsByID($id);
+		if (empty($blackouts)) {
+			throw new Exception('Room blackout not found.\n');
 		}
-		return $reservations[0];
+		return $blackouts[0];
 	}
 
 	/**
-	 * すべての予約を取得します。
+	 * すべての部屋の停電を取得します。
 	 *
-	 * @return Rsv[] 予約の配列
-	 * @throws Exception 予約の取得に失敗した場合
+	 * @return RoomBlackout[] 部屋の停電の配列
+	 * @throws Exception 部屋の停電の取得に失敗した場合
 	 */
-	public function getAllRsvs(): array
+	public function getAllRoomBlackouts(): array
 	{
 		return $this->getAllRecords();
 	}
 
 	/**
-	 * 予約を作成します。
+	 * 部屋の停電を作成します。
 	 *
-	 * @param Rsv $rsv 予約データ
+	 * @param RoomBlackout $blackout 部屋の停電データ
 	 * @throws Exception
 	 */
-	public function addOrSetRsv(Rsv $rsv): void
+	public function addOrSetRoomBlackout(RoomBlackout $blackout): void
 	{
-		$this->addOrSetRecord($rsv);
+		$this->addOrSetRecord($blackout);
 	}
 
 	/**
@@ -77,16 +68,14 @@ class RsvTable extends AbstractTable
 	 */
 	protected function createRecord(array $data): AbstractRecord
 	{
-		$rsv = new Rsv(
-			$data['pj_id'],
+		$blackout = new RoomBlackout(
+			$data['definition_id'],
 			$data['room_id'],
-			$data['user_id'],
-			new DateTime($data['start_at']),
-			new DateTime($data['finish_at']),
-			$data['note']
+			new DateTime($data['start_at']),  // 文字列からDateTimeオブジェクトに変換
+			new DateTime($data['finish_at'])  // 文字列からDateTimeオブジェクトに変換
 		);
-		$rsv->id = $data['id'];
-		return $rsv;
+		$blackout->id = $data['id'];
+		return $blackout;
 	}
 
 	/**

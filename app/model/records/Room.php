@@ -1,10 +1,5 @@
 <?php
-
-namespace Core\Database\Records;
-
-use Core\Database\AbstractRecord;
-use Exception;
-use Throwable;
+require_once __DIR__ . '/_load.php';
 
 class Room extends AbstractRecord
 {
