@@ -1,7 +1,7 @@
 ---
 name: Issueテンプレート
 about: Issueを正確に報告するための標準テンプレート
-title: "[Issue]: "
+title: "Issue: "
 labels: bug
 assignees: ''
 

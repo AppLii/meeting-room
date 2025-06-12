@@ -1,7 +1,7 @@
 ---
 name: 🚀 パフォーマンス改善
 about: アプリケーションのパフォーマンスを向上させるための変更を提案するテンプレートです。
-title: "[Perf]: "
+title: "Perf: "
 labels: performance
 assignees: ''
 ---
