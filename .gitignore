@@ -1,3 +1,7 @@
 ./php-error.log
 
-./.idea
+# JetBrains IDEs
+.idea/
+*.iml
+*.iws
+*.ipr
