@@ -1,0 +1,14 @@
+# この設定ファイルは、リポジトリで使用する Issue テンプレートのオプションを定義しています。
+
+# 空の Issue 作成フォームを有効化する設定
+blank_issues_enabled: true
+
+# ユーザーへ案内するための参考リンク設定
+contact_links:
+  - name: "📄 ドキュメント参照（AppLiiドキュメント）"
+    url: "https://docs.google.com/document/d/1JVR8u-gJweZS5ZLe_Rnd--7dHVWWMwRbpma_QtUQBRA/edit?tab=t.vg64m74alx9f"
+    about: "質問する前に、まずこちらのドキュメントを確認してください。"
+
+  - name: "📄 ドキュメント参照（外部サイト）"
+    url: "https://qiita.com/konatsu_p/items/dfe199ebe3a7d2010b3e"
+    about: "質問する前に、まずこちらのドキュメントを確認してください。"
