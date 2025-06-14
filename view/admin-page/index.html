@@ -5,23 +5,52 @@
     <meta name="viewport" content="width=device-width, initial-scale=1.0">
     <title>管理者画面</title>
 </head>
-<body>
-    <main>
-        時間帯：<br>
-        使用するPJ：<br>
-        予約する者：<br>
-        使用する部屋：
+<body> 
+    <div>
+        <p>時間帯：
+            <select starting time="start">
+                <option value = "start">9:00</option>
+                <option value = "start">9:10</option>
+            </select>
+        ～
+            <select finishing time="finish">
+                <option value = "finish">11:10</option>
+                <option value = "finish">11:20</option>
+            </select>
+        </p>
+        <p>使用するPJ：
+            <select PJ="PJ">
+                <option value = "PJ">AppLii</option>
+                <option value = "PJ">ソーラーカープロジェクト</option>
+            </select>
+        </p>
+        <p>予約する者：
+            <select name="name">
+                <option value = "name">クリエスタッフ</option>
+            </select>
+        </p>
+        <p> 使用する部屋：
+            <select room="room">
+                <option value = "room">ルームA</option>
+            </select>
+        </p>
+        <br>
         <p2>
             確定
         </p2>
-    </main>
-    <main>
-        <p3>
-            ルームA
-        </p3>
+    </div>
+    <br><br>
+    <div>
+        <dl>
+            <dt>ルームA</dt><br>
+            <dd>・ITものづくりプロジェクト AppLii<br>
+            ・和大太郎（S2410000）
+            </dd>
+        </dl>
+        <br>
         <p2>
             取消
         </p2>
-    </main>
+    </div>
 </body>
 </html>
