@@ -16,7 +16,7 @@ class RoomTable extends AbstractTable
 	 */
 	public static function getInstance(): static
 	{
-		return self::getInstanceInternal('room');
+		return self::getChildInstance('room');
 	}
 
 	/**

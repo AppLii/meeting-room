@@ -232,7 +232,7 @@ abstract class AbstractTable
 	}
 
 	// プロテクテッドメソッド
-	protected static function getInstanceInternal(string $table_name): static
+	protected static function getChildInstance(string $table_name): static
 	{
 		$class = static::class;
 		if (!isset(self::$instances[$class])) {

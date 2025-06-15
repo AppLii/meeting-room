@@ -20,7 +20,7 @@ class RsvTable extends AbstractTable
 	 */
 	public static function getInstance(): static
 	{
-		return self::getInstanceInternal('rsv');
+		return self::getChildInstance('rsv');
 	}
 
 	/**
