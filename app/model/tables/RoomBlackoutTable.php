@@ -18,7 +18,7 @@ class RoomBlackoutTable extends AbstractTable
 	 */
 	public static function getInstance(): static
 	{
-		return self::getInstanceInternal('room_blackout');
+		return self::getChildInstance('room_blackout');
 	}
 
 	/**

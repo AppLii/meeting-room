@@ -17,7 +17,7 @@ class PjTable extends AbstractTable
 	 */
 	public static function getInstance(): static
 	{
-		return self::getInstanceInternal('pj');
+		return self::getChildInstance('pj');
 	}
 
 	/**

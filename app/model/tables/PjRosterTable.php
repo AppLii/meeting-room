@@ -16,7 +16,7 @@ class PjRosterTable extends AbstractTable
 	 */
 	public static function getInstance(): static
 	{
-		return self::getInstanceInternal('pj_roster');
+		return self::getChildInstance('pj_roster');
 	}
 
 	/**

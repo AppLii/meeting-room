@@ -17,7 +17,7 @@ class BlackoutDefinitionTable extends AbstractTable
 	 */
 	public static function getInstance(): static
 	{
-		return self::getInstanceInternal('blackout_definition');
+		return self::getChildInstance('blackout_definition');
 	}
 
 	/**
