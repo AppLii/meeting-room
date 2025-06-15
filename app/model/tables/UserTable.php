@@ -15,7 +15,7 @@ class UserTable extends AbstractTable
 	 */
 	public static function getInstance(): static
 	{
-		return self::getInstanceInternal('user');
+		return self::getChildInstance('user');
 	}
 
 	// UserTableクラスはシングルトンなので、インスタンスを外部から生成できないようにします。
