@@ -1,12 +1,33 @@
 <!DOCTYPE html>
 <html lang="ja">
 <head>
-
     <meta charset="UTF-8">
     <meta name="viewport" content="width=device-width, initial-scale=1.0">
-    <title>Document</title>
+    <title>ミーティングルーム予約システム - ログイン</title>
+    <link rel="stylesheet" href="style.css">
 </head>
 <body>
+
+    <header class="page-header">
+        <h1>ミーティングルーム予約システム</h1>
+    </header>
+
+    <div class="login-container">
+        <h2>ログイン</h2>
+        <form action="/main_page" method="post">
+            <div class="form-group">
+                <label for="wadaiid">WadaiID</label>
+                <input type="email" id="wadaiid" name="username" placeholder="x0000000@wakayama-u.ac.jp" required>
+            </div>
+            <div class="form-group">
+                <label for="password">パスワード</label>
+                <input type="password" id="password" name="password" required>
+            </div>
+            <div class="form-actions">
+                <button type="submit">ログイン</button>
+            </div>
+        </form>
+    </div>
 
 </body>
 </html>
