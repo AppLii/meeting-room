@@ -1,39 +1,41 @@
 <!DOCTYPE html>
 <html lang="ja">
 <head>
-    <meta charset="UTF-8">
-    <meta name="viewport" content="width=device-width, initial-scale=1.0">
-    <title>ミーティングルーム予約システム - ログイン</title>
-    <link rel="stylesheet" href="style.css">
-    <link rel="stylesheet" href="https://cdnjs.cloudflare.com/ajax/libs/font-awesome/6.5.0/css/all.min.css">
+  <meta charset="UTF-8">
+  <meta name="viewport" content="width=device-width, initial-scale=1.0">
+  <title>ミーティングルーム予約システム - ログイン</title>
+  <link rel="stylesheet" href="style.css">
+  <link rel="stylesheet" href="https://cdnjs.cloudflare.com/ajax/libs/font-awesome/6.5.0/css/all.min.css">
 </head>
 <body>
 
-    <header class="page-header">
-        <h1>ミーティングルーム予約システム</h1>
-    </header>
+  <header class="page-header">
+    <h1>ミーティングルーム予約システム</h1>
+  </header>
 
-    <div class="login-container">
-        <h2>ログイン</h2>
-        <form action="/main_page" method="post">
-            <div class="form-group">
-                <label for="wadaiid">WadaiID</label>
-                <input type="email" id="wadaiid" name="username" placeholder="x0000000@wakayama-u.ac.jp" required>
-            </div>
-            <div class="form-group">
-                <label for="password">パスワード</label>
-                <div class="password-container">
-                    <input type="password" id="password" name="password" maxlength="20" required>
-                    <button type="button" onclick="togglePassword()">
-                        <i id="eye-icon" class="fa-solid fa-eve"></i>
-                    </button>
-                </div>
-            </div>
-            <div class="form-actions">
-                <button type="submit">ログイン</button>
-            </div>
-        </form>
-    </div>
+  <div class="login-container">
+    <h2>ログイン</h2>
+    <form action="/main_page" method="post">
+      <div class="form-group">
+        <label for="wadaiid">WadaiID</label>
+        <input type="email" id="wadaiid" name="username" placeholder="x0000000@wakayama-u.ac.jp" required>
+      </div>
+      <div class="form-group">
+        <label for="password">パスワード</label>
+        <div class="password-container">
+          <input type="password" id="password" name="password" maxlength="20" required>
+          <button type="button" onclick="togglePassword()">
+            <i id="eye-icon" class="fa-solid fa-eye"></i>
+          </button>
+        </div>
+      </div>
+      <div class="form-actions">
+        <button type="submit">ログイン</button>
+      </div>
+    </form>
+    <p class="note">アイコンは <a href="https://fontawesome.com/" target="_blank">FontAwesome</a> から</p>
+  </div>
 
+  <script src="script.js"></script>
 </body>
 </html>
