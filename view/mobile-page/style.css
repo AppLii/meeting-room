@@ -16,9 +16,14 @@ body {
 container-type: inline-size;
 }
 
+.font-size-S {
+  font-size: clamp(1.1rem, calc(0.9rem + 0.4vw), 1.4rem);
+}
+
+
 .login-container {
   background: white;
-  max-width: 250px;
+  max-width: 275px;
   margin: 50px auto;
   padding: 30px;
   border-radius: 8px;
