@@ -43,7 +43,7 @@ body {
   
   .password-container input {
     width: 100%;
-    padding-right: 40px; /* 右に余白を確保して目アイコン分のスペース */
+    padding-right: 40px;
     box-sizing: border-box;
   }
   

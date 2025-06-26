@@ -13,3 +13,4 @@ function togglePassword() {
     }
   }
   
+  document.getElementById('viewport').setAttribute('content', 'width=360,initial-scale=1');
