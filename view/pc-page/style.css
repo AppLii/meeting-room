@@ -1,0 +1,84 @@
+/* カスタムプロパティ（変数）の定義 */
+:root {
+    --background-color: #f5f5f5;
+    --theme-color: #f90;
+}
+
+/* ページ全体の基本設定 */
+body {
+    margin: 0;
+    font-family: "Hiragino Kaku Gothic ProN", "Hiragino Sans", Meiryo, sans-serif;
+    background-color: var(--background-color); /* 背景を薄いグレーに */
+}
+
+/* ヘッダーのスタイル */
+.page-header {
+    background-color: var(--theme-color); /* ヘッダーの背景をオレンジに */
+    padding: 15px 30px;
+    color: #fff;
+}
+
+.page-header h1 {
+    margin: 0;
+    font-size: 20px;
+}
+
+/* ログインフォームのコンテナ */
+.login-container {
+    width: 500px;
+    margin: 60px auto; /* 上下のマージンと、左右中央揃え */
+    padding: 20px 40px 40px 40px;
+    background-color: white;
+    border: 1px solid #ddd;
+    box-shadow: 0 4px 8px rgba(0, 0, 0, 0.05); /* 影 */
+}
+
+/* 「ログイン」という見出しのスタイル */
+.login-container h2 {
+    font-size: 22px;
+    margin-top: 10px;
+    margin-bottom: 30px;
+}
+
+/* ラベルと入力欄のグループ */
+.form-group {
+    margin-bottom: 20px;
+}
+
+.form-group label {
+    display: block; /* ラベルをブロック要素にして改行 */
+    font-size: 14px;
+    font-weight: bold;
+    margin-bottom: 8px;
+}
+
+.form-group input {
+    width: 100%;
+    padding: 12px;
+    border: 1px solid #ccc;
+    border-radius: 4px; /* 角を少し丸める */
+    box-sizing: border-box; /* paddingを含めて幅100%にする */
+    font-size: 16px;
+}
+
+/* ボタンのスタイル */
+.form-actions {
+    text-align: right; /* ボタンを右寄せにする */
+    margin-top: 10px;
+}
+
+.form-actions button {
+    background-color: #33a9e0; /* ボタンの背景色 */
+    color: white;
+    border: none;
+    padding: 10px 30px;
+    font-size: 16px;
+    font-weight: bold;
+    border-radius: 4px;  
+    transition: background-color 0.2s;  /* ホバー時の背景色変化をスムーズにする */ 
+}
+
+/* ボタンにホバーした時のスタイル */
+.form-actions button:hover {
+    background-color: #2894c7; /* ホバー時の背景色 */
+}
